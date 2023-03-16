@@ -1,0 +1,187 @@
+<configuration>
+<property name="LOGS_PATH" value="/opt/apps/M2MApiLogs/" />
+ 
+
+   <statusListener class="ch.qos.logback.core.status.NopStatusListener" /> 
+    
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+	   
+		<encoder>
+			
+            <Pattern>
+          
+            %cyan(%d{ISO8601}) %highlight(%-5level) [%green(%t)] %magenta(%C{1.}): %msg%n%throwable
+            
+            </Pattern>
+            
+		</encoder>
+		
+		</appender> 
+		
+	
+<appender name="M2MAppLogs"
+
+        class="ch.qos.logback.core.rolling.RollingFileAppender" >
+ 
+  <file>${LOGS_PATH}/M2MAppLogs.log</file>
+
+  <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+  
+    <Pattern>
+    
+        %d{yyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+      
+    </Pattern>
+    
+  </encoder>
+ 
+     <rollingPolicy
+        
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy" level="WARN">
+          
+            <fileNamePattern>${LOGS_PATH}/M2MAppLogsArchived/M2MAppLogs.log-%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
+            
+            <timeBasedFileNamingAndTriggeringPolicy
+            
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+               
+                <maxFileSize>30MB</maxFileSize>
+             
+            </timeBasedFileNamingAndTriggeringPolicy>
+            
+        </rollingPolicy> 
+        
+    </appender>
+
+	<appender name="M2MAccessLogs" class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+	
+   <file>${LOGS_PATH}/M2MAccessLogs.log</file>
+
+  <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+  
+    <Pattern>
+             %d{yyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
+    </Pattern>
+    
+  </encoder>
+  
+  <rollingPolicy
+    
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy" level="WARN">
+         
+            <fileNamePattern>${LOGS_PATH}/M2MAccessLogsArchived/M2MAccessLogs.log-%d{yyyy-MM-dd_HH}.%i.log
+            
+            </fileNamePattern>
+            
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>30MB</maxFileSize>
+             
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+</appender>
+	
+	<logger name="org.hibernate" level="ERROR">
+
+	<appender-ref ref="M2MAppLogs"/>
+	</logger> 
+<!--  <logger name="org.springframework" level="INFO"  additivity="false"> -->
+  
+  <logger name="org.springframework" level="INFO"  additivity="false">
+    	<appender-ref ref="M2MAppLogs"/>
+	 </logger> 
+     
+	<logger name="org.springframework.transaction" level="INFO" additivity="false">
+	
+		
+		
+        <appender-ref ref="M2MAppLogs"/>
+	 
+	 </logger> 
+	
+	<logger name="org.springframework.security" level="INFO" additivity="false"> 
+	
+			
+			
+ <appender-ref ref="M2MAppLogs"/>
+	
+	
+	 </logger> 
+	 
+
+	<logger name="org.springframework.web.servlet.mvc" level="INFO" additivity="false" >
+		
+ <appender-ref ref="M2MAppLogs"/>
+	
+	 </logger> 
+	
+	<logger name="com.digispice.m2m.serializers" level="DEBUG"  additivity="false">
+		
+       <appender-ref ref="M2MAppLogs"/>
+	
+	 </logger> 
+	
+		<logger name="com.digispice.m2m.deserializers" level="DEBUG" additivity="false" >
+		
+         <appender-ref ref="M2MAppLogs"/>
+	
+	 </logger> 
+	 
+	 <logger name="com.digispice.m2m.filter.RequestLoggingFilter" level="INFO" additivity="false">
+	
+        
+      <appender-ref ref="M2MAccessLogs"/> 
+    
+   </logger> 
+   
+   <logger name="com.digispice.m2m.filter.ResponseLoggingFilter" level="INFO" additivity="false">
+  
+      <appender-ref ref="M2MAccessLogs"/> 
+
+    
+   </logger>
+    
+     
+     <logger name="com.digispice.m2m.service" level="DEBUG" additivity="false">
+  
+    <appender-ref ref="M2MAppLogs"/>
+   
+   </logger>
+   
+   <logger name="com.digispice.m2m.controller"  level="DEBUG" additivity="false" >
+        <appender-ref ref="M2MAppLogs"/> 
+   </logger>
+   
+      <logger name="com.digispice.m2m.exception.RestResponseEntityExceptionHandler" level="INFO" additivity="false">
+  
+    <appender-ref ref="M2MAppLogs"/>
+    
+   </logger>
+   
+     <logger name="com.digispice.m2m.utilities" level="INFO" additivity="false">
+  
+    <appender-ref ref="M2MAppLogs"/>
+    
+   </logger>
+   
+     <logger name="com.digispice.m2m.security.RestAuthenticationEntryPoint" level="INFO" additivity="false">
+  
+    <appender-ref ref="M2MAppLogs"/>
+    
+   </logger>
+   
+   <logger name="com.digispice.m2m.security.CustomUserDetailsService" level="INFO" additivity="false">
+  
+    <appender-ref ref="M2MAppLogs"/>
+    
+   </logger>
+ 
+
+	 <root level="INFO">
+		<appender-ref ref="STDOUT" />
+
+	</root> 
+
+
+</configuration>

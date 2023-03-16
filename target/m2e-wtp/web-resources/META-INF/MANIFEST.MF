@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: U2-E00269
+Build-Jdk: 16.0.2
+Implementation-Title: M2M_API
+Implementation-Version: 0.0.1
+Implementation-Vendor-Id: com.digispice.mcom
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/M2MAPI
+Created-By: Maven Integration for Eclipse
+
